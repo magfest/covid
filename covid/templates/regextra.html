@@ -21,14 +21,6 @@
     </div>
 {% endif %}
 
-{% if not attendee.group and not attendee.promo_code_group %}
-{{ macros.form_group(
-    attendee,
-    'group_name',
-    label="Group Name",
-    help="Enter a group name to easily check in with other attendees in the same group.") }}
-{% endif %}
-
 {% if false and attendee.paid != c.NEED_NOT_PAY and not attendee.checked_in and not attendee.amount_unpaid and attendee.badge_status == c.COMPLETED_STATUS and (admin_area or c.PAGE_PATH == '/preregistration/confirm') %}
 <div id="attend_virtually" class="alert alert-success">
     <div class="form-group">
