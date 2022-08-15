@@ -1,0 +1,14 @@
+
+<div class="form-group">
+    <div class="col-sm-9 col-sm-offset-3">
+        <label class="checkbox-label" style="font-weight: normal;">
+        <input type="checkbox" name="covid_agreement"{% if covid_agreement %} checked{% endif %} />
+        {% if c.COVID_POLICIES_URL %}
+        I understand and agree with the {{ macros.popup_link(c.COVID_POLICIES_URL, c.EVENT_NAME_AND_YEAR ~ " COVID Policy") }}.
+        {% else %}
+        I understand that if accepted, I will need to agree to the {{ c.EVENT_NAME_AND_YEAR ~ " COVID Policy" }} 
+        in order to complete my application.{% if c.PRIOR_COVID_POLICIES_URL %} ({{ macros.popup_link(c.PRIOR_COVID_POLICIES_URL, "See last year's policy here") }}){% endif %}
+        {% endif %}
+        </label>
+    </div>
+</div>
