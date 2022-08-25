@@ -19,42 +19,9 @@ class Attendee:
     def checkin_bools(self):
         return ['got_merch', 'covid_ready'] if c.MERCH_AT_CHECKIN else ['covid_ready']
 
-    """def calculate_shipping_fee_cost(self):
-        if self.amount_extra >= c.SEASON_LEVEL:
-                return 15
-        elif self.amount_extra >= c.SUPPORTER_LEVEL:
-            return 10
-        elif self.amount_extra >= c.SHIRT_LEVEL:
-            return 5"""
+    @presave_adjustment
+    def keep_covid_agreement(self):
+        if self.orig_value_of('agreed_to_covid_policies') and self.orig_value_of('agreed_to_covid_policies') == True:
+            # Workaround for a bug on how the admin form handles booleans
+            self.agreed_to_covid_policies = True
 
-    @property
-    def is_not_ready_to_checkin(self):
-        """
-        Returns None if we are ready for checkin, otherwise a short error
-        message why we can't check them in.
-        """
-        
-        if self.badge_status == c.WATCHED_STATUS:
-            if self.banned or not self.regdesk_info:
-                regdesk_info_append = " [{}]".format(self.regdesk_info) if self.regdesk_info else ""
-                return "MUST TALK TO SECURITY before picking up badge{}".format(regdesk_info_append)
-            return self.regdesk_info or "Badge status is {}".format(self.badge_status_label)
-
-        if self.badge_status not in [c.COMPLETED_STATUS, c.NEW_STATUS]:
-            return "Badge status is {}".format(self.badge_status_label)
-        
-        if self.placeholder:
-            return "Placeholder badge"
-
-        if self.is_unassigned:
-            return "Badge not assigned"
-
-        if self.is_presold_oneday:
-            if self.badge_type_label != localized_now().strftime('%A'):
-                return "Wrong day"
-
-        if self.donate_badge_cost:
-            return "Asked badge + merch to be shipped to them"
-
-        message = check(self)
-        return message
