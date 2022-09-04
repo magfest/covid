@@ -25,3 +25,15 @@ class Attendee:
             # Workaround for a bug on how the admin form handles booleans
             self.agreed_to_covid_policies = True
 
+    @presave_adjustment
+    def reset_covid_ready(self):
+        prior_legal_name = self.orig_value_of('legal_name')
+        if not prior_legal_name:
+            prior_legal_name = self.orig_value_of('first_name') + " " + self.orig_value_of('last_name')
+
+        current_legal_name = self.legal_name
+        if not current_legal_name:
+            current_legal_name = self.first_name + " " + self.last_name
+        
+        if current_legal_name != prior_legal_name:
+            self.covid_ready = False
