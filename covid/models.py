@@ -12,7 +12,7 @@ from uber.utils import add_opt, check, localized_now, remove_opt
 @Session.model_mixin
 class Attendee:
     agreed_to_covid_policies = Column(Boolean, default=False)
-    covid_ready = Column(Boolean, default=False)
+    covid_ready = Column(Boolean, default=False, admin_only=True)
     #donate_badge_cost = Column(Boolean, default=False)
 
     @classproperty
