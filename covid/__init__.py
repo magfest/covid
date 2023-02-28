@@ -14,5 +14,6 @@ from .config import config
 # These need to come last so they can make use of config properties
 from .models import *  # noqa: F401,E402,F403
 from .model_checks import *  # noqa: F401,E402,F403
+from .forms import *  # noqa: F401,E402,F403
 
 template_overrides(join(config['module_root'], 'templates'))

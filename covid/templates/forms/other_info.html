@@ -1,0 +1,9 @@
+{% extends "forms/other_info.html" %}
+
+{% block consents %}
+{{ super() }}
+
+<div class="row g-3">
+    <div class="col">{{ form_macros.form_input(other_info.agreed_to_covid_policies) }}</div>
+</div>
+{% endblock %}
